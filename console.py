@@ -4,7 +4,7 @@
 
 import cmd
 import json
-#from . import storage
+# from . import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -25,20 +25,20 @@ class HBNBCommand(cmd.Cmd):
         """
         Show all instances
         Usage: all
-        
-        It can also be used to show all instances base on class name
+
+        It can also be used to show all instances based on class name
         Usage: all className
         Example: all BaseModel
         """
 
         args = parse(arg)
         if len(args) < 1:
-            #print(json.dumps(getInstances()))
+            # print(json.dumps(getInstances()))
             print("All instances")
             return False
         if args[0] in classes:
-            #users = json.dumps(getinstances(args[0]))
-            #print(users)
+            # users = json.dumps(getinstances(args[0]))
+            # print(users)
             print("All {} instances".format(args[0]))
         else:
             print("** class doesn't exist **")
@@ -112,28 +112,30 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")"""
 
-    def 
-
     def emptyline(self):
         """Define behaviour when an empty line is entered"""
         pass
 
+
 classes = ("BaseModel", "User")
+
 
 def parse(arg):
     """Convert input to a command and arguments"""
+
     return tuple(arg.split())
 
-"""
-def getinstances(className=None):
-    instanceList = []
-    for obj in storage.all().values():
-        if className is None:
-            instanceList.append(obj)
-        elif obj.__class__.__name__ == className:
-            instanceList.append(obj)
-    return instanceList
-"""
+    """
+    def getinstances(className=None):
+        instanceList = []
+        for obj in storage.all().values():
+            if className is None:
+                instanceList.append(obj)
+            elif obj.__class__.__name__ == className:
+                instanceList.append(obj)
+        return instanceList
+    """
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
