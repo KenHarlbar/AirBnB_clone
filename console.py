@@ -34,8 +34,11 @@ class HBNBCommand(cmd.Cmd):
 
         args = parse(arg)
         if len(args) < 1:
-            # print(json.dumps(getInstances()))
-            print("All instances")
+            all_obj = models.storage.all()
+            return_list = []
+            for obj in all_obj.values():
+                return_list.append(str(obj))
+            print(return_list)
             return False
         if args[0] in classes:
             all_obj = models.storage.all()
@@ -157,18 +160,6 @@ def parse(arg):
     """Convert input to a command and arguments"""
 
     return tuple(arg.split())
-
-    """
-    def getinstances(className=None):
-        instanceList = []
-        for obj in storage.all().values():
-            if className is None:
-                instanceList.append(obj)
-            elif obj.__class__.__name__ == className:
-                instanceList.append(obj)
-        return instanceList
-    """
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
