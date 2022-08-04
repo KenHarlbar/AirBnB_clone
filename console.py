@@ -158,6 +158,8 @@ class HBNBCommand(cmd.Cmd):
         if len(args) >= 2:
             if args[1] == "all()":
                 self.do_all(args[0])
+            elif args[1][:4] == "show":
+                self.do_show(stripper(args))
 
 
 classes = ("BaseModel", "User")
@@ -167,6 +169,22 @@ def parse(arg):
     """Convert input to a command and arguments"""
 
     return tuple(arg.split())
+
+
+def stripper(args):
+    """ Return clean string of arg """
+
+    new_list = []
+    new_list.append(args[0])
+    new_list.append(str(args[1].strip("\")show(\"")))
+    print("----------------------** STRIPPER **------------------------")
+    print(new_list[0])
+    print(new_list[1])
+    print(type(new_list[1]))
+    string = " ".join(i for i in new_list)
+    print(string)
+    print("______________________** END **____________________________")
+    return string
 
 
 if __name__ == '__main__':
