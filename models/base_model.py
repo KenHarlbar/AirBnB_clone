@@ -3,6 +3,7 @@
 
 from datetime import datetime
 import uuid
+import models
 
 
 class BaseModel:
@@ -20,6 +21,7 @@ class BaseModel:
             self.id = kwargs["id"]
             self.created_at = datetime.fromisoformat(kwargs["created_at"])
             self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+        models.storage.new(self)
 
     def __str__(self):
         """ Returns string representation of instance """
@@ -30,6 +32,7 @@ class BaseModel:
         """ Updates the public instance attribute updated_at """
 
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """ Returns a dictionary containing all keys/values
