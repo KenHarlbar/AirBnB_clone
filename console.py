@@ -6,7 +6,6 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
-import gc
 
 
 class HBNBCommand(cmd.Cmd):
@@ -43,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if args[0] in classes:
             all_obj = models.storage.all()
             return_list = []
-            for key, value in all_obj.items():
+            for value in all_obj.values():
                 if type(value).__name__ == args[0]:
                     return_list.append(str(value))
             print(return_list)
@@ -152,6 +151,14 @@ class HBNBCommand(cmd.Cmd):
             my_obj.__dict__[args[2]] = args[3].strip('\"')
             my_obj.save()
 
+    def default(self, line):
+        """ Method that handles unknown commands """
+
+        args = tuple(line.split('.'))
+        if len(args) >= 2:
+            if args[1] == "all()":
+                self.do_all(args[0])
+
 
 classes = ("BaseModel", "User")
 
@@ -160,6 +167,7 @@ def parse(arg):
     """Convert input to a command and arguments"""
 
     return tuple(arg.split())
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
