@@ -5,6 +5,7 @@ import cmd
 import json
 import models
 from models.base_model import BaseModel
+from models.user import User
 import gc
 
 
@@ -56,7 +57,6 @@ class HBNBCommand(cmd.Cmd):
         Usage: show className id
         Example: show User 1234-1234-1234
         """
-        classes = ("BaseModel", "User")
         args = parse(arg)
         if len(args) < 1:
             print("** class name missing **")
