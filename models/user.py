@@ -5,7 +5,9 @@ from .base_model import BaseModel
 
 
 class User(BaseModel):
-    """The User class to save users information"""
+    """
+    The User class that defines users attributes
+    """
 
     email = ""
     password = ""
