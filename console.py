@@ -6,6 +6,11 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
 import gc
 
 
@@ -153,13 +158,14 @@ class HBNBCommand(cmd.Cmd):
             my_obj.save()
 
 
-classes = ("BaseModel", "User")
+classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
 
 
 def parse(arg):
     """Convert input to a command and arguments"""
 
     return tuple(arg.split())
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
