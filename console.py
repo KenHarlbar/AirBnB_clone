@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         if args[0] in classes:
             all_obj = models.storage.all()
             return_list = []
-            for key, value in all_obj.items():
+            for value in all_obj.values():
                 if type(value).__name__ == args[0]:
                     return_list.append(str(value))
             print(return_list)
@@ -157,6 +157,16 @@ class HBNBCommand(cmd.Cmd):
             my_obj.__dict__[args[2]] = args[3].strip('\"')
             my_obj.save()
 
+    def default(self, line):
+        """ Method that handles unknown commands """
+
+        args = tuple(line.split('.'))
+        if len(args) >= 2:
+            if args[1] == "all()":
+                self.do_all(args[0])
+            elif args[1][:4] == "show":
+                self.do_show(stripper("show", args))
+
 
 classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
 
@@ -165,6 +175,24 @@ def parse(arg):
     """Convert input to a command and arguments"""
 
     return tuple(arg.split())
+
+
+def stripper(method, args):
+    """ Return clean string of arg """
+
+    new_list = []
+    new_list.append(args[0])
+    if method == "show":
+        new_list.append(str(args[1].strip("\")show(\"")))
+
+    print("----------------------** STRIPPER **------------------------")
+    print(new_list[0])
+    print(new_list[1])
+    print(type(new_list[1]))
+    string = " ".join(i for i in new_list)
+    print(string)
+    print("______________________** END **____________________________")
+    return string
 
 
 if __name__ == '__main__':
