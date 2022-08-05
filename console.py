@@ -157,6 +157,29 @@ class HBNBCommand(cmd.Cmd):
             my_obj.__dict__[args[2]] = args[3].strip('\"')
             my_obj.save()
 
+    def do_count(self, arg):
+        """
+        Count all instances of a class
+        Usage: "count" OR "count <class_name>"
+
+        It can also be used to show all instances based on class name
+        Example: count OR count BaseModel
+        """
+
+        args = parse(arg)
+        all_obj = models.storage.all()
+        if len(args) < 1:
+            print(len(all_obj))
+            return False
+        if args[0] in classes:
+            count = 0
+            for i in all_obj.values():
+                if i.__class__.__name__ == args[0]:
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
+
     def default(self, line):
         """ Method that handles unknown commands """
 
@@ -166,6 +189,8 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(args[0])
             elif args[1][:4] == "show":
                 self.do_show(stripper("show", args))
+            elif args[1] == "count()":
+                self.do_count(args[0])
 
 
 classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
