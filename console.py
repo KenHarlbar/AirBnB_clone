@@ -148,8 +148,12 @@ class HBNBCommand(cmd.Cmd):
         elif length_of_args < 4:
             print("** value missing **")
         else:
-            my_obj.__dict__[args[2]] = args[3].strip('\"')
-            my_obj.save()
+            try:
+                my_obj.__dict__["".join(args[2]).strip("\"\"")] = eval(args[3])
+                my_obj.save()
+            except NameError:
+                my_obj.__dict__["".join(args[2]).strip("\"\"")] = args[3]
+                my_obj.save()
 
     def default(self, line):
         """ Method that handles unknown commands """
@@ -160,6 +164,8 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(args[0])
             elif args[1][:4] == "show":
                 self.do_show(stripper("show", args))
+            elif args[1][:6] == "update":
+                self.do_update(stripper("update", args))
 
 
 classes = ("BaseModel", "User")
@@ -174,10 +180,17 @@ def parse(arg):
 def stripper(method, args):
     """ Return clean string of arg """
 
+    args = list(args)
     new_list = []
     new_list.append(args[0])
     if method == "show":
         new_list.append(str(args[1].strip("\")show(\"")))
+    if method == "update":
+        args[1] = args[1][6:]
+        new = str(args[1].strip("\")(\",")).split()
+        print(new)
+        for i in new:
+            new_list.append(i.strip("\",\""))
 
     print("----------------------** STRIPPER **------------------------")
     print(new_list[0])

@@ -8,6 +8,9 @@ print("-- Reloaded objects --")
 for obj_id in all_objs.keys():
     obj = all_objs[obj_id]
     print(obj)
+print("-----User----")
+print(str(User))
+print("---End User---")
 
 print("-- Create a new User --")
 my_user = User()
