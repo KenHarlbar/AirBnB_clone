@@ -15,10 +15,12 @@ class TestBase(unittest.TestCase):
 
     def test_init(self):
         """Test init function"""
+        self.assertEqual(type(self.b1.id).__name__, "str")
         self.assertNotEqual(self.b1.id, self.b2.id)
         
-        self.assertAlmostEqual(round(self.b1.created_at.timestamp()), round(self.b1.updated_at.timestamp()))
+        self.assertEqual(self.b1.created_at.timestamp(), self.b1.updated_at.timestamp())
 
+        self.assertEqual(type(self.b1.created_at).__name__, "datetime")
         self.assertAlmostEqual(round(self.b1.created_at.timestamp()), self.created_b1)
 
     def test_save(self):
