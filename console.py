@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Console module for Airbnb clone"""
 
 import cmd
@@ -6,6 +6,12 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
+import gc
 
 
 class HBNBCommand(cmd.Cmd):
@@ -155,10 +161,36 @@ class HBNBCommand(cmd.Cmd):
                 my_obj.__dict__["".join(args[2]).strip("\"\"")] = args[3]
                 my_obj.save()
 
+    def do_count(self, arg):
+        """
+        Count all instances of a class
+        Usage: "count" OR "count <class_name>"
+
+        It can also be used to show all instances based on class name
+        Example: count OR count BaseModel
+        """
+
+        args = parse(arg)
+        all_obj = models.storage.all()
+        if len(args) < 1:
+            print(len(all_obj))
+            return False
+        if args[0] in classes:
+            count = 0
+            for i in all_obj.values():
+                if i.__class__.__name__ == args[0]:
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
+
     def default(self, line):
         """ Method that handles unknown commands """
 
         args = tuple(line.split('.'))
+        if len(args) < 2 or args[0] not in classes:
+            print("*** Unknown syntax:", line)
+            return False
         if len(args) >= 2:
             if args[1] == "all()":
                 self.do_all(args[0])
@@ -166,9 +198,15 @@ class HBNBCommand(cmd.Cmd):
                 self.do_show(stripper("show", args))
             elif args[1][:6] == "update":
                 self.do_update(stripper("update", args))
+            elif args[1] == "count()":
+                self.do_count(args[0])
+            elif args[1][:7] == "destroy":
+                self.do_destroy(args[0] + " " + args[1][8:-1].strip("\"\'"))
+            else:
+                print("*** Unknown syntax:", line)
 
 
-classes = ("BaseModel", "User")
+classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
 
 
 def parse(arg):

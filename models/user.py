@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """The User module"""
 
 from .base_model import BaseModel
