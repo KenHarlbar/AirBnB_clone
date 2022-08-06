@@ -191,6 +191,8 @@ class HBNBCommand(cmd.Cmd):
                 self.do_show(stripper("show", args))
             elif args[1] == "count()":
                 self.do_count(args[0])
+            elif args[1][:7] == "destroy":
+                self.do_destroy(args[0] + " " + args[1][8:-1].strip("\"\'"))
 
 
 classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
