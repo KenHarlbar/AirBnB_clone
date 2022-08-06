@@ -184,6 +184,9 @@ class HBNBCommand(cmd.Cmd):
         """ Method that handles unknown commands """
 
         args = tuple(line.split('.'))
+        if len(args) < 2 or args[0] not in classes:
+            print("*** Unknown syntax:", line)
+            return False
         if len(args) >= 2:
             if args[1] == "all()":
                 self.do_all(args[0])
@@ -193,6 +196,8 @@ class HBNBCommand(cmd.Cmd):
                 self.do_count(args[0])
             elif args[1][:7] == "destroy":
                 self.do_destroy(args[0] + " " + args[1][8:-1].strip("\"\'"))
+            else:
+                print("*** Unknown syntax:", line)
 
 
 classes = ("BaseModel", "User", "Place", "State", "City", "Amenity", "Review")
