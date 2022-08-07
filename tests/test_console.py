@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """ Test module for console.py """
 
+import os
 import unittest
 from console import HBNBCommand
 from unittest.mock import patch
 from io import StringIO
 from models import storage
+import tests
 
 
 class TestHBNBCommand(unittest.TestCase):
@@ -213,7 +215,6 @@ class TestHBNBCommand(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd('update User {} first_name "Balo"'.
                                format(my_list[0]))
-            
             self.assertEqual(eval(my_obj["User.{}[{}]".
                              format(my_list[0].strip("\""), "first_name")]),
                              "Balo")
