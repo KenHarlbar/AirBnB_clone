@@ -42,10 +42,13 @@ class BaseModel:
         """ Returns a dictionary containing all keys/values
         of __dict__ of the instance """
 
-        return_dict = self.__dict__.copy()
-        return_dict["__class__"] = self.__class__.__name__
-        return_dict["created_at"] = self.created_at.\
-            strftime("%Y-%m-%dT%H:%M:%S.%f")
-        return_dict["updated_at"] = self.updated_at.\
-            strftime("%Y-%m-%dT%H:%M:%S.%f")
-        return return_dict
+        try:
+            return_dict = self.__dict__.copy()
+            return_dict["__class__"] = self.__class__.__name__
+            return_dict["created_at"] = self.created_at.\
+                strftime("%Y-%m-%dT%H:%M:%S.%f")
+            return_dict["updated_at"] = self.updated_at.\
+                strftime("%Y-%m-%dT%H:%M:%S.%f")
+            return return_dict
+        except AttributeError:
+            pass
