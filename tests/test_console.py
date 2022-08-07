@@ -7,7 +7,7 @@ from console import HBNBCommand
 from unittest.mock import patch
 from io import StringIO
 from models import storage
-import tests
+import console
 
 
 class TestHBNBCommand(unittest.TestCase):
@@ -219,3 +219,56 @@ class TestHBNBCommand(unittest.TestCase):
                              format(my_list[0].strip("\""), "first_name")]),
                              "Balo")
         """
+
+    def test_docstrings_in_console(self):
+        """checking for docstrings"""
+
+        self.assertIsNotNone(console.__doc__)
+        self.assertIsNotNone(HBNBCommand.emptyline.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+        # self.assertIsNotNone(HBNBCommand.count.__doc__)
+        self.assertIsNotNone(HBNBCommand.default.__doc__)
+
+    def test_class_all(self):
+        """ Test alternate all command input """
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("MyModel.all()")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("State.all()")
+            self.assertEqual("[]\n", f.getvalue())
+
+    def test_class_show(self):
+        """ Test alternate all command input """
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("safdsa.show()")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("BaseModel.show(abcd-123)")
+            self.assertEqual(
+                "** no instance found **\n", f.getvalue())
+
+    def test_class_count(self):
+        """ Test alternate all command input """
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("asdfsdfsd.count()")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("State.count()")
+            self.assertEqual("0\n", f.getvalue())
+
+
+if __name__ == "__main__":
+    unittest.main()

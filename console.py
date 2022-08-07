@@ -193,9 +193,9 @@ class HBNBCommand(cmd.Cmd):
         """ Method that handles unknown commands """
 
         args = tuple(line.split('.'))
-        if len(args) < 2 or args[0] not in classes:
+        """if len(args) < 2 or args[0] not in classes:
             print("*** Unknown syntax:", line)
-            return False
+            return False"""
         if len(args) >= 2:
             if args[1] == "all()":
                 self.do_all(args[0])
@@ -234,14 +234,7 @@ def stripper(method, args):
         print(new)
         for i in new:
             new_list.append(i.strip("\",\""))
-
-    print("----------------------** STRIPPER **------------------------")
-    print(new_list[0])
-    print(new_list[1])
-    print(type(new_list[1]))
     string = " ".join(i for i in new_list)
-    print(string)
-    print("______________________** END **____________________________")
     return string
 
 
