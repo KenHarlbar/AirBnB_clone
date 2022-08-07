@@ -18,9 +18,12 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = self.created_at
         else:
-            self.id = kwargs["id"]
-            self.created_at = datetime.fromisoformat(kwargs["created_at"])
-            self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+            try:
+                self.id = kwargs["id"]
+                self.created_at = datetime.fromisoformat(kwargs["created_at"])
+                self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+            except AttributeError:
+                pass
         models.storage.new(self)
 
     def __str__(self):
