@@ -200,3 +200,21 @@ class TestHBNBCommand(unittest.TestCase):
                                  f.getvalue())
             except Exception:
                 pass
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            try:
+                self.consol.onecmd('update User {} first_name'.
+                                   format(my_list[0]))
+                self.assertEqual('** value missing **\n', f.getvalue())
+            except Exception:
+                pass
+
+        """
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('update User {} first_name "Balo"'.
+                               format(my_list[0]))
+            
+            self.assertEqual(eval(my_obj["User.{}[{}]".
+                             format(my_list[0].strip("\""), "first_name")]),
+                             "Balo")
+        """
