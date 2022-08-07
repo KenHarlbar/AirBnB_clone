@@ -138,10 +138,13 @@ class HBNBCommand(cmd.Cmd):
         length_of_args = len(args)
         if length_of_args < 1:
             print("** class name missing **")
+            return False
         elif args[0] not in classes:
             print("** class doesn't exist **")
+            return False
         elif length_of_args < 2:
             print("** instance id missing **")
+            return False
         else:
             all_obj = models.storage.all()
             key = "{}.{}".format(args[0], args[1])
@@ -151,8 +154,10 @@ class HBNBCommand(cmd.Cmd):
             my_obj = all_obj[key]
         if length_of_args < 3:
             print("** attribute name missing **")
+            return False
         elif length_of_args < 4:
             print("** value missing **")
+            return False
         else:
             try:
                 my_obj.__dict__["".join(args[2]).strip("\"\"")] = eval(args[3])
