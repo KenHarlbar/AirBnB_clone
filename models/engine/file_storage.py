@@ -55,10 +55,9 @@ class FileStorage:
         """ deserializes the JSON file to __objects """
 
         try:
-            if os.path.exists(FileStorage.__file_path):
-                with open(FileStorage.__file_path, 'r') as f:
-                    for key, value in (json.load(f)).items():
-                        value = eval(value["__class__"])(**value)
-                        FileStorage.__objects[key] = value
+            with open(FileStorage.__file_path, 'r') as f:
+                for key, value in (json.load(f)).items():
+                    value = eval(value["__class__"])(**value)
+                    FileStorage.__objects[key] = value
         except Exception:
             pass
