@@ -1,1 +1,1 @@
-{"User.2ff8ae89-a82d-484a-a821-88f31b1163d8": {"id": "2ff8ae89-a82d-484a-a821-88f31b1163d8", "created_at": "2022-08-08T22:16:51.513796", "updated_at": "2022-08-08T22:18:40.712914", "first_name": "John", "age": "89", "__class__": "User"}}
+{"instance.2c379bbe-6fdc-4641-8130-5156df328390": {"__class__": "BaseModel", "created_at": "2022-08-08T22:36:37.358219", "id": "2c379bbe-6fdc-4641-8130-5156df328390", "updated_at": "2022-08-08T22:36:37.358264"}}
