@@ -201,12 +201,19 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(args[0])
             elif args[1][:4] == "show":
                 self.do_show(stripper("show", args))
-            elif args[1][:6] == "update":
-                self.do_update(stripper("update", args))
             elif args[1] == "count()":
                 self.do_count(args[0])
             elif args[1][:7] == "destroy":
                 self.do_destroy(args[0] + " " + args[1][8:-1].strip("\"\'"))
+            elif args[1][:6] == "update":
+                new_args = stripper("update", args)
+                if isinstance(new_args, list):
+                    obj = models.storage.all()
+                    key = new_args[0] + ' ' + new_args[1]
+                    for k, v in new_args[2].items():
+                        self.do_update(key + ' "{}" "{}"'.format(k, v))
+                else:
+                    self.do_update(new_args)
             else:
                 print("*** Unknown syntax:", line)
 
@@ -228,14 +235,20 @@ def stripper(method, args):
     new_list.append(args[0])
     if method == "show":
         new_list.append(str(args[1].strip("\")show(\"")))
-    if method == "update":
-        args[1] = args[1][6:]
-        new = str(args[1].strip("\")(\",")).split()
-        print(new)
-        for i in new:
-            new_list.append(i.strip("\",\""))
-    string = " ".join(i for i in new_list)
-    return string
+    elif method == "update":
+        try:
+            my_dict = eval(
+                args[1][args[1].find('{'):args[1].find('}')+1])
+        except Exception:
+            my_dict = None
+        if isinstance(my_dict, dict):
+            new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+            new_list.append(((new_str.split(", "))[0]).strip('"'))
+            new_list.append(my_dict)
+            return new_list
+        new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+        new_list.append(" ".join(new_str.split(", ")))
+    return " ".join(i for i in new_list)
 
 
 if __name__ == '__main__':
