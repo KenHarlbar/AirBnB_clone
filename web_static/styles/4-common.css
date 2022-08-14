@@ -19,3 +19,13 @@ body {
     margin: 30px auto;
     align-items: center;
 }
+
+h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+ul {
+  list-style: none;
+  padding: 10px;
+}
